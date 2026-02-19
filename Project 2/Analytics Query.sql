@@ -1,6 +1,6 @@
 USE MYSELF;
 
-#11. Find each sale’s contribution % to total revenue.
+#1. Find each saleâ€™s contribution % to total revenue.
 
 SELECT 
 s.sale_id,
@@ -15,7 +15,7 @@ FROM sales s
 JOIN products p
 ON s.product_id = p.product_id;
 
-#12. Identify customers who purchased Electronics more than once.
+#2. Identify customers who purchased Electronics more than once.
 
 SELECT 
 c.first_name,
@@ -31,7 +31,7 @@ GROUP BY c.first_name, c.last_name
 HAVING COUNT(*) > 1;
 
 
-#13. Calculate month-over-month revenue growth using LAG().
+#3. Calculate month-over-month revenue growth using LAG().
 
 WITH monthly_sales AS (
 SELECT 
@@ -51,7 +51,7 @@ revenue - LAG(revenue) OVER (ORDER BY yr, mn) AS growth
 FROM monthly_sales;
 
 
-#14. Find top-selling product per month.
+#4. Find top-selling product per month.
 
 WITH product_month AS (
 SELECT 
@@ -71,7 +71,7 @@ GROUP BY YEAR(s.sale_date), MONTH(s.sale_date), p.product_name
 SELECT *FROM product_month
 WHERE rnk = 1;
 
-#15. List repeat customers (purchased in multiple months).
+#5. List repeat customers (purchased in multiple months).
 
 SELECT 
 c.first_name,
@@ -84,7 +84,7 @@ GROUP BY c.first_name, c.last_name
 HAVING COUNT(DISTINCT FORMAT(s.sale_date,'yyyy-MM')) > 1;
 
 
-#16. Analyze customer retention (first vs last purchase date).
+#6. Analyze customer retention (first vs last purchase date).
 
 SELECT 
 c.first_name,
@@ -96,7 +96,7 @@ JOIN customers c
 ON s.customer_id = c.customer_id
 GROUP BY c.first_name, c.last_name;
 
-#17. Find most popular category by gender.
+#7. Find most popular category by gender.
 
 SELECT 
 c.gender,
@@ -110,7 +110,7 @@ ON s.product_id = p.product_id
 GROUP BY c.gender, p.category
 ORDER BY c.gender, total_orders DESC;
 
-#18. Show top 3 customers in each region by revenue.
+#8. Show top 3 customers in each region by revenue.
 
 WITH region_revenue AS (
 SELECT 
@@ -136,7 +136,7 @@ SELECT *
 FROM region_revenue
 WHERE rnk <= 3;
 
-#19. Identify slow-moving products with low total sales.
+#9. Identify slow-moving products with low total sales.
 
 SELECT 
 p.product_name,
@@ -147,7 +147,7 @@ ON s.product_id = p.product_id
 GROUP BY p.product_name
 HAVING SUM(s.quantity) < 5;
 
-#20. Calculate category revenue share percentage.
+#10. Calculate category revenue share percentage.
 
 SELECT 
 p.category,
@@ -163,4 +163,5 @@ FROM sales s
 JOIN products p 
 ON s.product_id = p.product_id
 GROUP BY p.category;
+
 
